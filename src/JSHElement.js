@@ -4,6 +4,7 @@ class JSHElement {
         let body = config.body;
         let props = config.props;
         let element = config.element;
+        this.children = [];
 
         if (element == null) {
             let el = document.createElement(tag);
@@ -44,10 +45,31 @@ class JSHElement {
     }
 
     append(el) {
-        this.element.appendChild(el.element)
+        this.element.appendChild(el.element);
+        this.children.push(el);
+        return this;
     }
 
     kill() {
         this.element.remove();
+    }
+
+    html(content) {
+        this.element.innerHTML = content
+        return this;
+    }
+
+    bindAttribute(attribute, object, varName, value) {
+        let last = object[varName];
+        
+        value = value.split('{#}');
+        this.element[attribute] = value.join(object[varName]);
+
+        setInterval(() => {
+            if (last != object[varName]) {
+                last = object[varName];
+                this.element[attribute] = value.join(object[varName]);
+            }
+        }, 50)
     }
 }
