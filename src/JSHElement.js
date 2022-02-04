@@ -44,7 +44,6 @@ class JSHElement {
     }
 
     append(el) {
-        console.log(el)
         this.element.appendChild(el.element)
     }
 }
