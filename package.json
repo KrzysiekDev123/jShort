@@ -1,0 +1,17 @@
+{
+  "name": "jshort",
+  "version": "1.0.0",
+  "description": "Library better than jQuery",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "grunt": "^1.4.1"
+  },
+  "dependencies": {
+    "grunt-contrib-uglify": "^5.0.1"
+  }
+}
