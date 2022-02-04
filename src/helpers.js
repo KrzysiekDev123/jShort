@@ -5,7 +5,3 @@ function makeElement(tag, body, props) {
         props: props
     });
 }
-
-function render(element, root) {
-    root.element.appendChild(element.element);
-}

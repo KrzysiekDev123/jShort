@@ -46,4 +46,8 @@ class JSHElement {
     append(el) {
         this.element.appendChild(el.element)
     }
+
+    kill() {
+        this.element.remove();
+    }
 }
