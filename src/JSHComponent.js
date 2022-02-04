@@ -27,19 +27,4 @@ class JSHComponent {
         this.container.html(content);
         return this;
     }
-
-    refresh() {
-        for (let child of this.container.children) {
-            let c = child;
-            let index = this.container.children.indexOf(child);
-
-            console.log(child)
-            child.kill();
-
-            let copied = Object.assign({}, c);
-            console.log(copied)
-            this.container.element.appendChild(copied.element);
-            this.container.children[index] = copied;
-        }
-    }
 }
