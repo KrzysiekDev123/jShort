@@ -12,20 +12,32 @@ function S(selector, root) {
     } else if (selected.length == 1) {
         let element = selected[0];
 
+        let props = {};
+
+        for (propName of element.attributes) {
+            props[propName] = element.attributes[propName];
+        }
+
         return new JSHElement({
             tag: element.tagName,
             body: element.innerHTML,
-            props: Array.from(element.attributes).map((prop) => [prop.name, prop.value]),
+            props: props,
             element: element
         });
     } else {
         let elements = [];
-
+        
         selected.forEach((element) => {
+            let props = {};
+
+            for (propName of element.attributes) {
+                props[propName] = element.attributes[propName];
+            }
+
             elements.push(new JSHElement({
                 tag: element.tagName,
                 body: element.innerHTML,
-                props: Array.from(element.attributes).map((prop) => [prop.name, prop.value]),
+                props: props,
                 element: element
             }));
         })

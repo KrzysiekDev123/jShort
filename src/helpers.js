@@ -5,7 +5,6 @@ function makeElement(tag, body, props) {
         props: props
     });
 }
-let d = document;
 
 function render(element, root) {
     root.element.appendChild(element.element);

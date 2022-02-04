@@ -10,8 +10,8 @@ class JSHElement {
 
             if (body != null) el.innerHTML = body;
 
-            if (props != null) {for (let prop of props) {
-                el.setAttribute(prop[0], prop[1])
+            if (props != null) {for (let propName of Object.keys(props)) {
+                el.setAttribute(propName, props[propName]);
             }}
 
             this.element = el;
@@ -28,8 +28,8 @@ class JSHElement {
     style (action, data) {
         switch (action) {
             case 'add':
-                for (let prop of data) {
-                    this.element.style[prop[0]] = prop[1];
+                for (let propName of Object.keys(data)) {
+                    this.element.style[propName] = data[propName];
                 }
                 break;
 
