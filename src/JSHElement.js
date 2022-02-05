@@ -27,6 +27,7 @@ class JSHElement {
     }
 
     style (action, data) {
+        if (action == null && data == null) return this.element.style;
         switch (action) {
             case 'add':
                 for (let propName of Object.keys(data)) {

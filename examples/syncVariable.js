@@ -7,7 +7,7 @@ class inputWithParagraph extends JSHComponent {
         // Creating a ReferenceVariable
         let inputContent = ReferenceVariable();
         // inputContent will sync with S('input').element.value
-        syncVariable(inputContent, "S('input').element.value")
+        inputContent.sync("S('input').element.value")
 
         // Binding text's innerHTML to 'Text in the text box: <inputContent>'
         text.bindAttribute('innerHTML', inputContent, this, [
