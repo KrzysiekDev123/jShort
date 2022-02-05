@@ -60,26 +60,32 @@ class JSHElement {
         return this;
     }
 
-    bindAttribute(attribute, refVar, obj, conditions) {
-        let last = refVar.value;
+    bindAttribute(attribute, args, conditions) {
+        let last = Object.assign({}, args)
+
+        function update() {
+            last = Object.assign({}, args)
+
+            let index = -1;
+            for (let i = 0; i < conditions.length; i++) {
+                if (conditions[i].condition()) {
+                    index = i;
+                    break;
+                }
+            }
+
+            if (index == -1) throw new Error("No true condition found")
+
+            return conditions[index].value()
+             
+        }
+        
+        this.element[attribute] = update();
 
         setInterval(() => {
-            if (last != refVar.value) {
-                let index = -1;
-                for (let i = 0; i < conditions.length; i++) {
-                    if (eval(conditions[i].condition)) {
-                        index = i;
-                        break;
-                    }
-                }
-
-                if (index == -1) throw new Error("No true condition found")
-
-                let value = conditions[index].value.split('{#}');
- 
-                last = refVar.value;
-                this.element[attribute] = value.join(refVar.value);
+            if (!compareObjects(last, args)) {
+                this.element[attribute] = update();
             }
-        }, 50)
+        }, 10)
     }
 }
