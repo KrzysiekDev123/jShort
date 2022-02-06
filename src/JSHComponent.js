@@ -27,4 +27,9 @@ class JSHComponent {
         this.container.html(content);
         return this;
     }
+
+    style(data) {
+        this.container.style(data);
+        return this;
+    }
 }

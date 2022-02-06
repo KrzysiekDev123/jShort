@@ -26,23 +26,12 @@ class JSHElement {
         return this;
     }
 
-    style (action, data) {
-        if (action == null && data == null) return this.element.style;
-        switch (action) {
-            case 'add':
-                for (let propName of Object.keys(data)) {
-                    this.element.style[propName] = data[propName];
-                }
-                break;
-
-            case 'remove':
-                for (let name of data) {
-                    this.element.style.removeProperty(name);
-                }
-                break;
-
-            default: throw new Error('Invalid action!');
+    style (data) {
+        if (data == null) return this.element.style;
+        for (let propName of Object.keys(data)) {
+            this.element.style[propName] = data[propName];
         }
+        return this;
     }
 
     append(el) {
@@ -87,5 +76,20 @@ class JSHElement {
                 this.element[attribute] = update();
             }
         }, 10)
+    }
+
+    hover(enter, leave) {
+        this.on('mouseover', () => {
+            enter();
+        })
+
+        this.on('mouseleave', () => {
+            leave();
+        })
+    }
+
+    addBehavior(behavior) {
+        behavior(this);
+        return this;
     }
 }

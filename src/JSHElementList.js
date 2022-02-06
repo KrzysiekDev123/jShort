@@ -15,9 +15,9 @@ class JSHElementList {
         return this
     }
 
-    style (action, data) {
+    style (data) {
         this.elements.forEach((x) => {
-            x.style(action, data);
+            x.style(data);
         })
         return this;
     }

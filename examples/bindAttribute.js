@@ -1,22 +1,22 @@
 class clickCounter extends JSHComponent {
     constructor(props) {
-        // Creating elements
         let button = makeElement('button', 'Click me!');
-        let text = makeElement('p', 'Please click the button');
-        // Passing them to the JSHComponent's constructor
+        let text = makeElement('p');
+        
         super(props, [button, text]);
 
-        // Creating a ReferenceVariable
-        this.clicks = ReferenceVariable(0);
+        let data = {
+            clicks: 0
+        }
 
-        // text.innerHTML will equal: "<clicks> Even", if 'clicks' is even, and "<clicks> Odd" if 'clicks' is odd.
-        text.bindAttribute('innerHTML', this.clicks, this, [
-            makeBindCondition('obj.clicks.value % 2 == 0', '{#} Even'),
-            makeBindCondition('true', '{#} Odd')
+        text.bindAttribute('innerHTML', data, [
+            makeBindCondition(() => (data.clicks == 0), () => 'Click the button'),
+            makeBindCondition(() => data.clicks % 2 == 0 ? true : false, () => `${data.clicks} Even`),
+            makeBindCondition(() => true, () => `${data.clicks} Odd`)
         ]);
 
         button.on('click', () => {
-            this.clicks.value++;
+            data.clicks++;
         })
     }
 }

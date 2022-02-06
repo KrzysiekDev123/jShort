@@ -42,29 +42,6 @@ const makeBindCondition = (condition, value) => {return {
     value: value
 }}
 
-
-/////////////////////////////////////////////////////////////
-/*let registeredTags = {}
-function findRegisteredTags() {
-    for (let tag of Object.keys(registeredTags)) {
-        for (let element of S(tag).elements) {
-            console.log(element)
-        }
-    }
-}
-
-findRegisteredTags();
-
-document.addEventListener('DOMNodeInserted', () => {
-    findRegisteredTags();    
-})
-
-
-function registerTag(name, componentClass) {
-    registeredTags[name] = componentClass;
-}
-*/
-
 function compareObjects(obj1, obj2) {
     for (let key of Object.keys(obj1)) {
         if (typeof obj1[key] == 'object') {
@@ -75,4 +52,8 @@ function compareObjects(obj1, obj2) {
     }
 
     return true;
+}
+
+function setTooltip(elem, text) {
+    elem.element.title = text;
 }

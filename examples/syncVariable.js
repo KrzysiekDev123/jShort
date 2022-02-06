@@ -14,7 +14,7 @@ class inputWithParagraph extends JSHComponent {
             makeBindCondition('true', 'Text in the text box: {#}')
         ])
 
-        text.style('add', {'margin-left': '30px'})
+        text.style({'margin-left': '30px'})
     }
 }
 
