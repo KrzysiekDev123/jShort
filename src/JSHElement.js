@@ -50,11 +50,9 @@ class JSHElement {
     }
 
     bindAttribute(attribute, args, conditions) {
-        let last = Object.assign({}, args)
-
-        function update() {
-            last = Object.assign({}, args)
-
+        let secondObject = Object.assign({}, args)
+    
+        function findTrueCondition() {
             let index = -1;
             for (let i = 0; i < conditions.length; i++) {
                 if (conditions[i].condition()) {
@@ -62,20 +60,22 @@ class JSHElement {
                     break;
                 }
             }
-
+    
             if (index == -1) throw new Error("No true condition found")
-
+    
             return conditions[index].value()
-             
         }
-        
-        this.element[attribute] = update();
 
-        setInterval(() => {
-            if (!compareObjects(last, args)) {
-                this.element[attribute] = update();
-            }
-        }, 10)
+        this.element[attribute] = findTrueCondition();
+        for (let key of Object.keys(args)) {
+            Object.defineProperty(args, key, {
+                get: () => secondObject[key],
+                set: (value) => {
+                    secondObject[key] = value;
+                    this.element[attribute] = findTrueCondition();
+                }
+            })
+        }
     }
 
     hover(enter, leave) {
