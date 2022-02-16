@@ -6,37 +6,19 @@ function makeElement(tag, body, props) {
     });
 }
 
-const ReferenceVariable = (value) => {
-    let self = {
-        value: value,
 
-        sync: (expression) => {
-            let interval = setInterval(() => {
-                try {
-                    let value = eval(expression)
-                    self.value = value;
-                } catch (e) {
-                    clearInterval(interval);
-                }
-            }, 10)
-            return self;
-        },
+function watch(object, callback) {
+    let storage = Object.assign({}, object);
 
-        watch: (onChange) => {
-            let last = self.value;
-            setInterval(() => {
-                if (self.value != last) {
-                    last = self.value;
-                    onChange();
-                }
-            }, 20)
-            return self;
-        }
-
-        
+    for (let key of Object.keys(object)) {
+        Object.defineProperty(object, key, {
+            get: () => storage[key],
+            set: (value) => {
+                storage[key] = value;
+                callback();
+            }
+        })
     }
-
-    return self;
 }
 
 const makeBindCondition = (condition, value) => {return {
@@ -59,3 +41,41 @@ function compareObjects(obj1, obj2) {
 function setTooltip(elem, text) {
     elem.element.title = text;
 }
+
+function ReferenceVariable(val) {
+    let storageObject = { value: val }
+    let self = {
+        value: val,
+        watch: (callback) => {
+            Object.defineProperty(self, 'value', {
+                get: () => storageObject.value,
+                set: (value) => {
+                    storageObject.value = value;
+                    callback(value);
+                }
+            })
+        },
+        sync: (func) => {
+            setInterval(() => {
+                self.value = func();
+            }, 50)
+        }
+    }
+
+    return self;
+}
+
+/// CREDIT: @SilentImp from Stack Overflow https://stackoverflow.com/a/48226843/13612015 
+function sanitize(string) {
+    const map = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#x27;',
+        "/": '&#x2F;',
+        "`": '&grave;'
+    };
+    const reg = /[&<>"'/]/ig;
+    return string.replace(reg, (match)=>(map[match]));
+  }
