@@ -1,2 +1,2 @@
 # jShort
-Vanilla JS library. Mix of jQuery and React.
+Vanilla JS library. Mix of ideas from jQuery and React.
